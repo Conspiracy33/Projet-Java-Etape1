@@ -21,35 +21,47 @@ public class ClassFicheProduit {
 	{
 		// Initialisation variable
 		String line ="";
-		int compteur = 0;
-		// Traitement
 		String leCSV = sourceFile;	
 		
 		
-		BufferedReader leReader = new BufferedReader(new FileReader(leCSV));
 		
+		BufferedReader leReader = new BufferedReader(new FileReader(leCSV));		
 		
 		while ((line = leReader.readLine()) != null)
 		{
-			//GESTION DU TABLEAU D'INFORMATIONS
+			//GENERATION DU TABLEAU D'INFORMATIONS
             String[] arrayInfo = line.split(";");
-			System.out.println("Code: " + arrayInfo[0] +" | Titre: " +  arrayInfo[1] + " | Description: " + arrayInfo[2] + " | Type: " + arrayInfo[3] + " | Prix: " + arrayInfo[4] + "€");
-			compteur++;
-			//APPEL DE LA FONCTION QRCODE
+            //FIN GENERATION
+            
+            //TRANSFORMATION PRIX POUR CONVERSION DOUBLE
+            Double prix = Double.valueOf(arrayInfo[4].replace(',', '.'));            
+            //FIN TRANSFORMATION
+            
+            //CREATION D'UN PRODUIT
+            Produit unProduit = new Produit(arrayInfo[0],arrayInfo[1],arrayInfo[2],arrayInfo[3],prix);
+            //FIN CREATION
+            
+            //AFFICHAGE DES LIGNES DU TABLEAU
+            System.out.println("Code: " + unProduit.getCode() +" | Nom: " +  unProduit.getNom() + " | Description: " + unProduit.getDescription() + " | Categorie: " + unProduit.getCategorie() + " | Prix: " + unProduit.getPrixHT() + "€");
+			//FIN AFFICHAGE
+            
+            //DECLARATION DE VARIABLES ET APPEL DE LA FONCTION QRCODE
 			String content = arrayInfo[0];
 			String filename = "C:\\Users\\Bastien\\Desktop\\Cours\\Java\\Projet1\\qrcode-"+ arrayInfo[0] +".png";
 			BufferedImage image = generate(content, 150);
 			ImageIO.write(image, "PNG", new File(filename));
-			//System.out.println("test");
+			//FIN DECLARATION ET APPEL
 		}
 	}
 	
+	//POUR LA GENERATION DE QRCODE
 	private static BufferedImage generate(String content, int sizeInPixels) throws WriterException {
 		QRCodeWriter qrWriter = new QRCodeWriter();
 		Object matrix = qrWriter.encode(content, BarcodeFormat.QR_CODE, sizeInPixels, sizeInPixels);
 		return MatrixToImageWriter.toBufferedImage((BitMatrix)matrix);
 	}
 
+	//MAIN
 	public static void main(String[] args) throws IOException, WriterException{
 		// TODO Auto-generated method stub
 		returnListe(args[0]);
