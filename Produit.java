@@ -17,17 +17,21 @@ public class Produit {
 	}
 	
 	public double calcul_montantTVA () {
+		java.text.DecimalFormat df = new java.text.DecimalFormat("0.##");
 		double taux = (1+pdt_tauxTVA/100);
 		double TTC = pdt_prixHT*taux;
 		double tva = TTC - pdt_prixHT;
-		return tva;
+		double value = Double.parseDouble( df.format(tva).replace(",",".") );
+		return value;
 		
 	}
 	
 	public double calcul_montantTTC () {
+		java.text.DecimalFormat df = new java.text.DecimalFormat("0.##");
 		double taux = (1+pdt_tauxTVA/100);
 		double calcul = pdt_prixHT*taux;
-		return calcul;
+		double value = Double.parseDouble( df.format(calcul).replace(",",".") );
+		return value;
 	}
 	
 	public void setCode(String code) {
