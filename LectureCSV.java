@@ -82,6 +82,8 @@ public class LectureCSV {
 		}
 		CreatePDF pdf = new CreatePDF();
 		pdf.creationPDF(lesProduits);
+		CreateEtiquette pdfEtiquette = new CreateEtiquette();
+		pdfEtiquette.creationEtiquette(lesProduits);
 		
 	}
 }
