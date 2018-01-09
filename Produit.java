@@ -1,85 +1,85 @@
 
 public class Produit {
-	private String pdt_code;
-	private String pdt_nom;
-	private String pdt_description;
-	private String pdt_categorie;
-	private double pdt_prixHT;
-	private double pdt_tauxTVA;
+	private String pdtcode;
+	private String pdtnom;
+	private String pdtdescription;
+	private String pdtcategorie;
+	private double pdtprixHT;
+	private double pdttauxTVA;
 	
 	public Produit(String code, String nom, String description, String categorie, double prix) {
-		pdt_code = code;
-		pdt_nom = nom;
-		pdt_description = description;
-		pdt_categorie = categorie;
-		pdt_prixHT = prix;
-		pdt_tauxTVA = 20;
+		pdtcode = code;
+		pdtnom = nom;
+		pdtdescription = description;
+		pdtcategorie = categorie;
+		pdtprixHT = prix;
+		pdttauxTVA = 20;
 	}
 	
-	public double calcul_montantTVA () {
+	public double calculMontantTVA () {
 		java.text.DecimalFormat df = new java.text.DecimalFormat("0.##");
-		double taux = (1+pdt_tauxTVA/100);
-		double TTC = pdt_prixHT*taux;
-		double tva = TTC - pdt_prixHT;
+		double taux = (1+pdttauxTVA/100);
+		double TTC = pdtprixHT*taux;
+		double tva = TTC - pdtprixHT;
 		double value = Double.parseDouble( df.format(tva).replace(",",".") );
 		return value;
 		
 	}
 	
-	public double calcul_montantTTC () {
+	public double calculMontantTTC () {
 		java.text.DecimalFormat df = new java.text.DecimalFormat("0.##");
-		double taux = (1+pdt_tauxTVA/100);
-		double calcul = pdt_prixHT*taux;
+		double taux = (1+pdttauxTVA/100);
+		double calcul = pdtprixHT*taux;
 		double value = Double.parseDouble( df.format(calcul).replace(",",".") );
 		return value;
 	}
 	
 	public void setCode(String code) {
-		pdt_code = code;
+		pdtcode = code;
 	}
 	
 	public String getCode() {
-		return pdt_code;
+		return pdtcode;
 	}
 	
 	public void setNom(String nom) {
-		pdt_code = nom;
+		pdtcode = nom;
 	}
 	
 	public String getNom() {
-		return pdt_nom;
+		return pdtnom;
 	}
 	
 	public void setDescription(String description) {
-		pdt_code = description;
+		pdtcode = description;
 	}
 	
 	public String getDescription() {
-		return pdt_description;
+		return pdtdescription;
 	}
 	
 	public void setCategorie(String categorie) {
-		pdt_code = categorie;
+		pdtcode = categorie;
 	}
 	
 	public String getCategorie() {
-		return pdt_categorie;
+		return pdtcategorie;
 	}
 	
 	public void setPrixHT(String prix) {
-		pdt_code = prix;
+		pdtcode = prix;
 	}
 	
 	public double getPrixHT() {
-		return pdt_prixHT;
+		return pdtprixHT;
 	}
 	
 	public void setTauxTVA(String taux) {
-		pdt_code = taux;
+		pdtcode = taux;
 	}
 	
 	public double getTauxTVA() {
-		return pdt_tauxTVA;
+		return pdttauxTVA;
 	}
 	
 }
