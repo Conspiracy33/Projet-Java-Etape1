@@ -1,5 +1,3 @@
-package ficheProduit;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -32,8 +30,7 @@ public class LigneCommande {
 		mesOptions.addOption("fiche", true, "suivi du chemin du fichier PDF contenant les fiches produit");
 		mesOptions.addOption("tva", true, "montant de la TVA à utiliser pour calculer le prix TTC (par défaut 20%)");
 	}
-
-
+	
 	public void controlerParametres(String[] args) throws ParseException, IOException, WriterException, com.google.zxing.WriterException, java.text.ParseException {
 		try {
 		     CommandLine line = parser.parse( mesOptions, args );
@@ -60,13 +57,7 @@ public class LigneCommande {
 		    		
 		    		if (line.hasOption("fiche")) {
 		    			String nameFichier = line.getOptionValue("fiche");
-                        String[] tabNameFichier = nameFichier.split("\\.");
-                        if(tabNameFichier[1].contains(("pdf"))) {
-                            pdtFiche.creerFiche(lesProduitsParCateg, nameFichier);
-                        }
-                        else{
-                            pdtFiche.creerFicheHTML(lesProduitsParCateg, nameFichier);
-                        }
+		    			pdtFiche.creerFiche(lesProduitsParCateg, nameFichier);
 		    		}
 		    		
 		    	}
@@ -82,14 +73,8 @@ public class LigneCommande {
 		    		}
 		    		
 		    		if (line.hasOption("fiche")) {
-                        String nameFichier = line.getOptionValue("fiche");
-                        String[] tabNameFichier = nameFichier.split("\\.");
-                        if(tabNameFichier[1].contains(("pdf"))) {
-                            pdtFiche.creerFiche(lesProduits, nameFichier);
-                        }
-                        else{
-                            pdtFiche.creerFicheHTML(lesProduits, nameFichier);
-                        }
+		    			String nameFichier = line.getOptionValue("fiche");
+		    			pdtFiche.creerFiche(lesProduits, nameFichier);
 		    		}
 		    	}
 		    	
@@ -98,14 +83,8 @@ public class LigneCommande {
 					pdfEtiquette.creerEtiquette(lesProduits, nameFichier);
 		    	}
 		    	if(line.hasOption("fiche") && (!line.hasOption("tva")) && (!line.hasOption("categorie"))) {
-                    String nameFichier = line.getOptionValue("fiche");
-                    String[] tabNameFichier = nameFichier.split("\\.");
-                    if(tabNameFichier[1].contains(("pdf"))) {
-                        pdtFiche.creerFiche(lesProduits, nameFichier);
-                    }
-                    else{
-                        pdtFiche.creerFicheHTML(lesProduits, nameFichier);
-                    }
+		    		String nameFichier = line.getOptionValue("fiche");
+		    		pdtFiche.creerFiche(lesProduits, nameFichier);
 		    	}
 		    }
 		}
@@ -118,7 +97,6 @@ public class LigneCommande {
 		LigneCommande uneCommande = new LigneCommande();
 		uneCommande.creerCollOptions();
 		uneCommande.controlerParametres(args);
-
 	}
 }
 

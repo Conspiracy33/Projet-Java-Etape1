@@ -1,10 +1,6 @@
-package ficheProduit;
-
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -14,11 +10,6 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import freemarker.cache.FileTemplateLoader;
-import freemarker.ext.servlet.FreemarkerServlet;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 public class FicheProduit {
 	
@@ -123,32 +114,4 @@ public class FicheProduit {
 			 e.printStackTrace();
 		 }
 	}
-
-	public void creerFicheHTML(ArrayList <Produit> lesProduits, String nameFichier){
-		//StringWriter writer = new StringWriter();
-		try {
-            Configuration configuration = new Configuration();
-            configuration.setDirectoryForTemplateLoading(new File("/"));
-            configuration.setClassForTemplateLoading(this.getClass(), "/template/");
-            //configuration.getEncoding(Locale.FRENCH);
-            //configuration.setDefaultEncoding("utf-8");
-            Map<String, Object> input = new HashMap<String, Object>();
-            input.put("ListeProduit",lesProduits);
-            Template template = configuration.getTemplate("ficheProduit.ftl");
-
-			Writer file = new FileWriter (new File("C:/Users/Bastien/eclipse-workspace-2/FicheProduit/ficheProduit.html"));
-			//template.process(input, file);
-			template.process(input,file);
-			//Template freemarkerTemplate = configuration.getTemplate(nameFichier);
-        }
-        catch (IOException e){
-		    e.printStackTrace();
-        } catch (TemplateException e) {
-			e.printStackTrace();
-		}
-	}
-
-    public static void main(String[] args) throws Exception {
-        //creerFicheHTML();
-    }
 }

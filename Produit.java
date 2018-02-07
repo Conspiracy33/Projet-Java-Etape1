@@ -4,10 +4,10 @@ public class Produit {
 	private String pdtnom;
 	private String pdtdescription;
 	private String pdtcategorie;
-	private double pdtprixHT;
+	private int pdtprixHT;
 	private double pdttauxTVA;
 	
-	public Produit(String code, String nom, String description, String categorie, double prix) {
+	public Produit(String code, String nom, String description, String categorie, int prix) {
 		pdtcode = code;
 		pdtnom = nom;
 		pdtdescription = description;
@@ -16,22 +16,18 @@ public class Produit {
 		pdttauxTVA = 20;
 	}
 	
-	public double calculMontantTVA () {
-		java.text.DecimalFormat df = new java.text.DecimalFormat("0.##");
+	public double getMontantTva () {
 		double taux = (1+pdttauxTVA/100);
-		double TTC = pdtprixHT*taux;
-		double tva = TTC - pdtprixHT;
-		double value = Double.parseDouble( df.format(tva).replace(",",".") );
-		return value;
-		
+		double montant = (pdtprixHT*taux) - pdtprixHT;
+		double montantTVA = (double)Math.round(montant) / 100;
+		return montantTVA;
 	}
 	
-	public double calculMontantTTC () {
-		java.text.DecimalFormat df = new java.text.DecimalFormat("0.##");
+	public double getMontantTTC () {
 		double taux = (1+pdttauxTVA/100);
-		double calcul = pdtprixHT*taux;
-		double value = Double.parseDouble( df.format(calcul).replace(",",".") );
-		return value;
+		double montant = pdtprixHT*taux;
+		double montantTTC = (double)Math.round(montant) / 100;
+		return montantTTC;
 	}
 	
 	public void setCode(String code) {
@@ -43,7 +39,7 @@ public class Produit {
 	}
 	
 	public void setNom(String nom) {
-		pdtcode = nom;
+		pdtnom = nom;
 	}
 	
 	public String getNom() {
@@ -51,7 +47,7 @@ public class Produit {
 	}
 	
 	public void setDescription(String description) {
-		pdtcode = description;
+		pdtdescription = description;
 	}
 	
 	public String getDescription() {
@@ -59,23 +55,24 @@ public class Produit {
 	}
 	
 	public void setCategorie(String categorie) {
-		pdtcode = categorie;
+		pdtcategorie = categorie;
 	}
 	
 	public String getCategorie() {
 		return pdtcategorie;
 	}
 	
-	public void setPrixHT(String prix) {
-		pdtcode = prix;
+	public void setPrixHT(int prix) {
+		pdtprixHT = prix;
 	}
 	
 	public double getPrixHT() {
-		return pdtprixHT;
+		double prix = (double)Math.round(pdtprixHT) / 100;
+		return prix;
 	}
 	
-	public void setTauxTVA(String taux) {
-		pdtcode = taux;
+	public void setTauxTVA(double taux) {
+		pdttauxTVA = taux;
 	}
 	
 	public double getTauxTVA() {

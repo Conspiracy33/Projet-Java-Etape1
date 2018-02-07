@@ -1,9 +1,10 @@
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -12,13 +13,11 @@ import com.itextpdf.text.pdf.qrcode.WriterException;
 
 public class LectureCSV {
 
-	static String[] arrayInfo = null ;
 	
-	public ArrayList<Produit> listeProduits(String sourceFile) throws IOException, WriterException {
+	public ArrayList<Produit> listerProduits(String sourceFile) throws IOException, WriterException, ParseException {
 		
 		// Initialisation variables
 		String line ="";
-		int compteur = 0;
 		ArrayList<Produit> lesProduits = new ArrayList<Produit>();
 		
 		// Traitement
@@ -28,18 +27,18 @@ public class LectureCSV {
 		
 		while ((line = leReader.readLine()) != null) {
 			//GESTION DE LA COLLECTION D'INFORMATIONS
-            arrayInfo = line.split(";");
             Map <String, String> produitFinale = recupererDonnees(line);
     		String prix = produitFinale.get("prix");
-    		double value = Double.parseDouble( prix.replace(",",".") );
-    		Produit unProduit = new Produit (produitFinale.get("code"),produitFinale.get("nom"),produitFinale.get("description"),produitFinale.get("categorie"), value);
+    		double value = NumberFormat.getInstance(Locale.FRENCH).parse(prix).doubleValue();
+    		int valueInt = (int) (value*100);
+    		Produit unProduit = new Produit (produitFinale.get("code"),produitFinale.get("nom"),produitFinale.get("description"),produitFinale.get("categorie"), valueInt);
     		lesProduits.add(unProduit);
-			compteur++;	
 		}
+		leReader.close();
 		return lesProduits;
 	}
 	
-	 public Map<String, String> recupererDonnees(String produit) {
+	private Map<String, String> recupererDonnees(String produit) {
 
 		 String NomColonne = "code nom description categorie prix";
 		 String[] code = NomColonne.split(" ");
@@ -53,16 +52,4 @@ public class LectureCSV {
 		 return tableauTransfert;
 	}
 	
-
-	public static void main(String[] args) throws IOException, WriterException, com.google.zxing.WriterException {
-
-		LectureCSV liste= new LectureCSV();
-		ArrayList<Produit> lesProduits = liste.listeProduits("C:\\Users\\point\\eclipse-workspace\\GenerateurFicheProduit\\ListeProduits.csv");
-		
-		CreatePDF pdf = new CreatePDF();
-		pdf.creationPDF(lesProduits);
-		
-		CreateEtiquette pdfEtiquette = new CreateEtiquette();
-		pdfEtiquette.creationEtiquette(lesProduits);
-	}
 }
